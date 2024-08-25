@@ -1,7 +1,6 @@
 'use server'
 import { Client, Account, Databases, Users } from 'node-appwrite'
 import { cookies } from 'next/headers'
-import { Database } from 'lucide-react'
 
 export async function createSessionClient() {
 	const client = new Client()

@@ -23,6 +23,7 @@ const {
 export const getUserInfo = async ({ userId }: getUserInfoProps) => {
 	try {
 		const { database } = await createAdminClient()
+
 		const user = await database.listDocuments(
 			DATABASE_ID!,
 			USER_COLLECTION_ID!,
@@ -46,11 +47,12 @@ export const signIn = async ({ email, password }: signInProps) => {
 			sameSite: 'strict',
 			secure: true,
 		})
+
 		const user = await getUserInfo({ userId: session.userId })
 
 		return parseStringify(user)
 	} catch (error) {
-		console.log('Error', error)
+		console.error('Error', error)
 	}
 }
 
@@ -145,9 +147,9 @@ export const createLinkToken = async (user: User) => {
 			country_codes: ['US'] as CountryCode[],
 		}
 
-		const responce = await plaidClient.linkTokenCreate(tokenParams)
+		const response = await plaidClient.linkTokenCreate(tokenParams)
 
-		return parseStringify({ linkToken: responce.data.link_token })
+		return parseStringify({ linkToken: response.data.link_token })
 	} catch (error) {
 		console.log(error)
 	}
@@ -159,7 +161,7 @@ export const createBankAccount = async ({
 	accountId,
 	accessToken,
 	fundingSourceUrl,
-	sharaebleId,
+	shareableId,
 }: createBankAccountProps) => {
 	try {
 		const { database } = await createAdminClient()
@@ -174,12 +176,14 @@ export const createBankAccount = async ({
 				accountId,
 				accessToken,
 				fundingSourceUrl,
-				sharaebleId,
+				shareableId,
 			}
 		)
 
 		return parseStringify(bankAccount)
-	} catch (error) {}
+	} catch (error) {
+		console.log(error)
+	}
 }
 
 export const exchangePublicToken = async ({
@@ -231,7 +235,7 @@ export const exchangePublicToken = async ({
 			accountId: accountData.account_id,
 			accessToken,
 			fundingSourceUrl,
-			sharaebleId: encryptId(accountData.account_id),
+			shareableId: encryptId(accountData.account_id),
 		})
 
 		// Revalidate the path to reflect the changes
@@ -249,6 +253,7 @@ export const exchangePublicToken = async ({
 export const getBanks = async ({ userId }: getBanksProps) => {
 	try {
 		const { database } = await createAdminClient()
+
 		const banks = await database.listDocuments(
 			DATABASE_ID!,
 			BANK_COLLECTION_ID!,
@@ -264,6 +269,7 @@ export const getBanks = async ({ userId }: getBanksProps) => {
 export const getBank = async ({ documentId }: getBankProps) => {
 	try {
 		const { database } = await createAdminClient()
+
 		const bank = await database.listDocuments(
 			DATABASE_ID!,
 			BANK_COLLECTION_ID!,
