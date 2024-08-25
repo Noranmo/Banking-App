@@ -67,9 +67,9 @@ export const formatDateTime = (dateString: Date) => {
 }
 
 export function formatAmount(amount: number): string {
-	const formatter = new Intl.NumberFormat('de-DE', {
+	const formatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
-		currency: 'EUR',
+		currency: 'USD',
 		minimumFractionDigits: 2,
 	})
 
@@ -79,6 +79,7 @@ export function formatAmount(amount: number): string {
 export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value))
 
 export const removeSpecialCharacters = (value: string) => {
+	if (!value) return
 	return value.replace(/[^\w\s]/gi, '')
 }
 
