@@ -46,6 +46,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
 			</TableHeader>
 			<TableBody>
 				{transactions.map((t: Transaction) => {
+					// console.log(t)
 					const status = getTransactionStatus(new Date(t.date))
 					const amount = formatAmount(t.amount)
 

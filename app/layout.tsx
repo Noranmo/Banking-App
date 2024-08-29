@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 	title: 'MrFoxes Gold',
 	description: 'Is a modern banking platform for us',
 	icons: {
-		icon: '/icons/logo.svg',
+		icon: '/icons/fox_logo.svg',
 	},
 }
 

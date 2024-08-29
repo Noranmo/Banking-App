@@ -175,7 +175,7 @@ declare interface PaginationProps {
 
 declare interface PlaidLinkProps {
 	user: User
-	variant?: 'primary' | 'ghost'
+	variant?: 'primary' | 'ghost' | 'right-side'
 	dwollaCustomerId?: string
 }
 
@@ -246,6 +246,7 @@ declare interface TransactionTableProps {
 
 declare interface CategoryProps {
 	category: CategoryCount
+	transactions: Transaction[]
 }
 
 declare interface DoughnutChartProps {

@@ -5,9 +5,6 @@ import {
 	Sheet,
 	SheetClose,
 	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet'
 import Image from 'next/image'
@@ -38,9 +35,9 @@ const MobileNav = ({ user }: MobileNavProps) => {
 						className='flex  cursor-pointer items-center gap-1 px-4'
 					>
 						<Image
-							src='/icons/logo.svg'
-							width={34}
-							height={34}
+							src='/icons/fox_logo.svg'
+							width={55}
+							height={55}
 							alt='MrFox logo'
 						/>
 						<h1 className='text-26 font-ibm-plex-serif font-bold text-black-1'>

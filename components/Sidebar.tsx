@@ -17,11 +17,11 @@ const Sidebar = ({ user }: SiderbarProps) => {
 			<nav className='flex flex-col gap-4'>
 				<Link href='/' className='flex mb-12 cursor-pointer items-center gap-2'>
 					<Image
-						src='/icons/logo.svg'
-						width={34}
-						height={34}
+						src='/icons/fox_logo.svg'
+						width={55}
+						height={55}
 						alt='MrFox logo'
-						className='size-[24px] max-xl:size-14'
+						className='size-[55px] max-xl:size-[40px]'
 					/>
 					<h1 className='sidebar-logo'>MrFox</h1>
 				</Link>
@@ -49,7 +49,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
 						</Link>
 					)
 				})}
-				<PlaidLink user={user} />
+				<PlaidLink user={user}/>
 			</nav>
 			<Footer user={user} />
 		</section>

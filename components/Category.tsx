@@ -1,11 +1,13 @@
 import Image from 'next/image'
 
 import { topCategoryStyles } from '@/constants'
-import { cn } from '@/lib/utils'
+import { cn, formatAmount } from '@/lib/utils'
 
 import { Progress } from './ui/progress'
 
-const Category = ({ category }: CategoryProps) => {
+const Category = ({ category, transactions = [] }: CategoryProps) => {
+	// console.log(category)
+	// console.log(transactions)
 	const {
 		bg,
 		circleBg,
@@ -14,6 +16,7 @@ const Category = ({ category }: CategoryProps) => {
 		icon,
 	} = topCategoryStyles[category.name as keyof typeof topCategoryStyles] ||
 	topCategoryStyles.default
+
 
 	return (
 		<div className={cn('gap-[18px] flex p-4 rounded-xl', bg)}>

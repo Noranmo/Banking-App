@@ -55,17 +55,23 @@ const AuthForm = ({ type }: { type: string }) => {
 					email: data.email,
 					password: data.email,
 				}
-
+				debugger
 				const newUser = await signUp(userData)
+				debugger
 				setUser(newUser)
 			}
 
 			if (type === 'sign-in') {
-				const responce = await signIn({
+				const userData = {
 					email: data.email,
 					password: data.password,
-				})
-				if (responce) router.push('/')
+				}
+
+				debugger
+				const user = await signIn(userData)
+
+				debugger
+				if (user) router.push('/')
 			}
 		} catch (error) {
 			console.log(error)
@@ -79,7 +85,7 @@ const AuthForm = ({ type }: { type: string }) => {
 			<header className='flex flex-col gap-5 md:gap-8'>
 				<Link href='/' className='flex cursor-pointer items-center gap-1'>
 					<Image
-						src='/icons/logo.svg'
+						src='/icons/fox_logo.svg'
 						width={34}
 						height={34}
 						alt='MrFox logo'
