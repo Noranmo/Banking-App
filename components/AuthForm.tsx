@@ -53,11 +53,11 @@ const AuthForm = ({ type }: { type: string }) => {
 					dateOfBirth: data.dateOfBirth!,
 					ssn: data.ssn!,
 					email: data.email,
-					password: data.email,
+					password: data.password,
 				}
-				debugger
+
 				const newUser = await signUp(userData)
-				debugger
+
 				setUser(newUser)
 			}
 
@@ -69,7 +69,6 @@ const AuthForm = ({ type }: { type: string }) => {
 
 				debugger
 				const user = await signIn(userData)
-
 				debugger
 				if (user) router.push('/')
 			}

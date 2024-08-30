@@ -29,20 +29,23 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
 			USER_COLLECTION_ID!,
 			[Query.equal('userId', [userId])]
 		)
-		debugger
+
 		return parseStringify(user.documents[0])
 	} catch (error) {
 		console.log(error)
 	}
 }
 
-export const signIn = async ({ password, ...userData }: signInProps) => {
-	const { email } = userData
+export const signIn = async ({ email, ...userData }: signInProps) => {
+	const { password } = userData
+	// console.log(email)
+	// console.log(password)
+
+	// console.log(userData)
 	try {
 		const { account } = await createAdminClient()
-		debugger
+
 		const session = await account.createEmailPasswordSession(email, password)
-		debugger
 
 		cookies().set('appwrite-session', session.secret, {
 			path: '/',
