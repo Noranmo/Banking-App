@@ -245,8 +245,19 @@ declare interface TransactionTableProps {
 }
 
 declare interface CategoryProps {
-	category: CategoryCount
-	transactions: Transaction[]
+	category: CategoryStats
+}
+
+declare interface CategoryStats {
+	name: string
+	count: number // Number of transactions
+	totalAmount: number // Total amount for the category
+	totalCount: number // Total count of all transactions
+}
+
+declare interface CategorySum {
+	name: string
+	totalAmount: number
 }
 
 declare interface DoughnutChartProps {

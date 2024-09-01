@@ -5,9 +5,7 @@ import { cn, formatAmount } from '@/lib/utils'
 
 import { Progress } from './ui/progress'
 
-const Category = ({ category, transactions = [] }: CategoryProps) => {
-	// console.log(category)
-	// console.log(transactions)
+const Category = ({ category }: CategoryProps) => {
 	const {
 		bg,
 		circleBg,
@@ -17,7 +15,6 @@ const Category = ({ category, transactions = [] }: CategoryProps) => {
 	} = topCategoryStyles[category.name as keyof typeof topCategoryStyles] ||
 	topCategoryStyles.default
 
-
 	return (
 		<div className={cn('gap-[18px] flex p-4 rounded-xl', bg)}>
 			<figure className={cn('flex-center size-10 rounded-full', circleBg)}>
@@ -26,7 +23,9 @@ const Category = ({ category, transactions = [] }: CategoryProps) => {
 			<div className='flex w-full flex-1 flex-col gap-2'>
 				<div className='text-14 flex justify-between'>
 					<h2 className={cn('font-medium', main)}>{category.name}</h2>
-					<h3 className={cn('font-normal', count)}>{category.count}</h3>
+					<h3 className={cn('font-normal', count)}>
+						{formatAmount(category.totalAmount)}
+					</h3>
 				</div>
 				<Progress
 					value={(category.count / category.totalCount) * 100}

@@ -1,4 +1,5 @@
 /* eslint-disable no-prototype-builtins */
+import Category from '@/components/Category'
 import { type ClassValue, clsx } from 'clsx'
 import qs from 'query-string'
 import { twMerge } from 'tailwind-merge'
@@ -131,10 +132,52 @@ export function getAccountTypeColors(type: AccountTypes) {
 	}
 }
 
-export function countTransactionCategories(
+export function getCategoryStats(transactions: Transaction[]): CategoryStats[] {
+	const categoryData: {
+		[category: string]: { count: number; totalAmount: number }
+	} = {}
+	let totalCount = 0
+
+	// Iterate over each transaction
+	transactions.forEach(transaction => {
+		const category = transaction.category || 'Uncategorized' // Use 'Uncategorized' for undefined categories
+		const amount = transaction.amount
+
+		// Initialize category data if not present
+		if (!categoryData[category]) {
+			categoryData[category] = { count: 0, totalAmount: 0 }
+		}
+
+		// Update count and total amount for the category
+		categoryData[category].count += 1
+		categoryData[category].totalAmount += isNaN(amount) ? 0 : amount
+
+		// Increment total transaction count
+		totalCount++
+	})
+
+	// Convert the category data to an array of CategoryStats objects
+	const aggregatedCategories: CategoryStats[] = Object.keys(categoryData).map(
+		category => ({
+			name: category,
+			count: categoryData[category].count,
+			totalAmount: categoryData[category].totalAmount,
+			totalCount,
+		})
+	)
+
+	// Sort the aggregatedCategories array by totalAmount in descending order
+	aggregatedCategories.sort((a, b) => b.totalAmount - a.totalAmount)
+
+	return aggregatedCategories
+}
+
+function countTransactionCategories(
 	transactions: Transaction[]
 ): CategoryCount[] {
-	const categoryCounts: { [category: string]: number } = {}
+	const categoryCounts: {
+		[category: string]: number
+	} = {}
 	let totalCount = 0
 
 	// Iterate over each transaction
@@ -142,7 +185,13 @@ export function countTransactionCategories(
 		transactions.forEach(transaction => {
 			// Extract the category from the transaction
 			const category = transaction.category
-			console.log('This is transactions: ', transaction)
+			const amount = transaction.amount
+			// console.log(
+			// 	'This is transaction category ',
+			// 	category,
+			// 	'and amount: ',
+			// 	amount
+			// )
 
 			// If the category exists in the categoryCounts object, increment its count
 			if (categoryCounts.hasOwnProperty(category)) {
@@ -151,7 +200,6 @@ export function countTransactionCategories(
 				// Otherwise, initialize the count to 1
 				categoryCounts[category] = 1
 			}
-
 			// Increment total count
 			totalCount++
 		})
@@ -167,6 +215,71 @@ export function countTransactionCategories(
 
 	// Sort the aggregatedCategories array by count in descending order
 	aggregatedCategories.sort((a, b) => b.count - a.count)
+
+	return aggregatedCategories
+}
+
+const groupAmountsByCategory = (transactions: Transaction[]) => {
+	const categorySums = transactions.reduce<{ [category: string]: number }>(
+		// if you want to see all amounts by each section change the :number to :number[]
+		(acc, transaction) => {
+			const category = transaction.category || 'Uncategorized'
+			const { amount } = transaction
+			// Initialize the category array if it doesn't exist
+			if (!acc[category]) {
+				// acc[category] = []
+				acc[category] = 0
+			}
+
+			// Push the amount into the appropriate category array
+			// acc[category].push(amount)
+
+			// Add the amount to the appropriate category sum
+			acc[category] += amount
+
+			return acc
+		},
+		{}
+	)
+	// Convert the category sums object to an array of CategorySum objects
+	const aggregatedCategories: CategorySum[] = Object.keys(categorySums).map(
+		category => ({
+			name: category,
+			totalAmount: categorySums[category],
+		})
+	)
+
+	return aggregatedCategories
+}
+// Function to group amounts by category and calculate the sum
+const calculateSumsByCategory = (transactions: Transaction[]) => {
+	// Reduce the transactions to an object with category as keys and sums as values
+	const categorySums = transactions.reduce<{ [category: string]: number }>(
+		(acc, transaction) => {
+			// Use 'Uncategorized' for transactions without a category
+			const category = transaction.category || 'Uncategorized'
+			const { amount } = transaction
+
+			// Initialize the category sum if it doesn't exist
+			if (!acc[category]) {
+				acc[category] = 0
+			}
+
+			// Add the amount to the appropriate category sum
+			acc[category] += amount
+
+			return acc
+		},
+		{}
+	)
+
+	// Convert the category sums object to an array of CategorySum objects
+	const aggregatedCategories: CategorySum[] = Object.keys(categorySums).map(
+		category => ({
+			name: category,
+			totalAmount: categorySums[category],
+		})
+	)
 
 	return aggregatedCategories
 }
