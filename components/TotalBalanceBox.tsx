@@ -6,7 +6,7 @@ const TotalBalanceBox = ({
 	accounts = [],
 	totalBanks,
 	totalCurrentBalance,
-}: TotalaBalanceBoxProps) => {
+}: TotalBalanceBoxProps) => {
 	return (
 		<section className='total-balance'>
 			<div className='total-balance-chart'>

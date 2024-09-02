@@ -8,15 +8,23 @@ const BankCard = ({
 	account,
 	userName,
 	showBalance = true,
+	orange = '',
 }: CreditCardProps) => {
 	// console.log(account)
+	// console.log(orange)
 	return (
 		<div className='flex flex-col'>
 			<Link
 				href={`/transaction-history/?id=${account.appwriteItemId}`}
-				className='bank-card'
+				className={`${orange === 'orange' ? 'bank-card__orange' : 'bank-card'}`}
 			>
-				<div className='bank-card_content'>
+				<div
+					className={`${
+						orange === 'orange'
+							? 'bank-card_content_orange'
+							: 'bank-card_content'
+					}`}
+				>
 					<div>
 						<h1 className='text-16 font-semibold text-white'>{account.name}</h1>
 						<p className='font-ibm-plex-serif font-black text-white'>
@@ -35,7 +43,11 @@ const BankCard = ({
 					</article>
 				</div>
 
-				<div className='bank-card_icon'>
+				<div
+					className={`${
+						orange === 'orange' ? 'bank-card_icon_orange' : 'bank-card_icon'
+					}`}
+				>
 					<Image src='/icons/Paypass.svg' width={20} height={24} alt='pay' />
 					<Image
 						src='/icons/mastercard.svg'
